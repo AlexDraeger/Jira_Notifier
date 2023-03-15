@@ -12,12 +12,27 @@ Than run
 npm install
 ```
 
-## Test Notification
+## Copy Service to systemd
 ```
-work in progress
+mv path/to/jira_notifier.service /etc/systemd/system/
 ```
 
-### 3. Open URL
+
+## Enable Service
+```bash
+cd /etc/systemd/system &&
+systmectl enable jira_notifier.service &&
+systemctl start jira_notifier.service &&
+systemctl status jira_notifier.service
 ```
-node basic.js
+Now you should get notificaitons
+
+
+## Troubleshooting
+### Check Permissions in jira.notifier.service File
+### also check your dbus interface by running
+```bash
+echo $DBUS_SESSION_BUS_ADDRESS
 ```
+### example output:
+unix:path=/run/user/1000/bus

@@ -1,3 +1,6 @@
+// to implement windows notifications check
+// https://stackoverflow.com/questions/39535937/what-is-the-notify-send-equivalent-for-windows
+
 import JiraApi from 'jira-client';
 import notifier from 'node-notifier';
 import open from 'open';
@@ -10,6 +13,10 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+let datum = new Date()
+datum.setDate(datum.getDate() - 7)
+const stringDate = `${datum.getFullYear()}/${datum.getMonth()+1}/${datum.getDate()}`
+
 var jira = new JiraApi({
     protocol: 'https',
     host: process.env.HOST,
@@ -20,9 +27,20 @@ var jira = new JiraApi({
   });
 
 async function main(){
-    const user = await jira.searchJira('assignee=currentuser() AND created > "2023/02/01"');
+    const user = await jira.searchJira(`assignee=currentuser() AND created > "${stringDate}"`);
+    if(user.total == 0) {
+      console.log('There are no new tickets')
+      notifier.notify({
+        title: 'No new Tickets',
+        icon: path.join(__dirname, 'logos/jira_logo.svg'),
+        message: `weitermache`,
+        sound: true,
+      })
+      return 0;
+    }
     user.issues.forEach((element) => {
-       notifier.notify({
+      console.log('There are new tickets') 
+      notifier.notify({
             title: `New JIRA Ticket ${element.key}`,
             icon: path.join(__dirname, 'logos/jira_logo.svg'),
             message: `Summary: ${element.fields.summary}\nCreator: ${element.fields.creator.displayName}`,

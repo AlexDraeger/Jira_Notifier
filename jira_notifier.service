@@ -1,0 +1,16 @@
+[Unit]
+Description=should run node app which makes a jira api call and creates a desktop notification
+After=network.target
+[Service]
+Environment="DISPLAY=:0" "XAUTHORITY=/home/myuser/.Xauthority" "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"
+Type=simple
+User=myuser
+RemainAfterExit=yes
+ExecStart=/usr/bin/node /home/myuser/IDE/projects/Jira_Notifier/basic.js
+Restart=on-failure
+WorkingDirectory=/home/myuser/IDE/projects/Jira_Notifier
+[Timer]
+OnCalendar=daily
+Persistent=true
+[Install]
+WantedBy=multi-user.target

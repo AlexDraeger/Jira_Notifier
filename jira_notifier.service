@@ -6,6 +6,7 @@ Environment="DISPLAY=:0" "XAUTHORITY=/home/myuser/.Xauthority" "DBUS_SESSION_BUS
 Type=simple
 User=myuser
 RemainAfterExit=yes
+ExecStartPre=/bin/sleep 120
 ExecStart=/usr/bin/node /home/myuser/IDE/projects/Jira_Notifier/basic.js
 Restart=on-failure
 WorkingDirectory=/home/myuser/IDE/projects/Jira_Notifier

@@ -21,7 +21,7 @@ mv path/to/jira_notifier.service /etc/systemd/system/
 ## Enable Service
 ```bash
 cd /etc/systemd/system &&
-systmectl enable jira_notifier.service &&
+systemctl enable jira_notifier.service &&
 systemctl start jira_notifier.service &&
 systemctl status jira_notifier.service
 ```

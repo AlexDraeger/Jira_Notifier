@@ -7,7 +7,7 @@ HOST="yourcompany.atlassian.net"
 USERNAME="your email"
 API_KEY="your api token - check jira doc"
 ```
-Than run
+Then run
 ```bash
 npm install
 ```
